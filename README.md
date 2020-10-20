@@ -1,6 +1,6 @@
 ## *Tasking*
 
-![增长黑马Tasking](/Users/junbin/Downloads/增长黑马Tasking.jpg)
+![增长黑马Tasking](/img/增长黑马Tasking.jpg)
 
 ## 技术方案
 
@@ -244,7 +244,7 @@
             - 商品介绍
             - 保存按钮
 
-![功能需求结构](/Users/junbin/Downloads/功能需求结构.png)
+![功能需求结构](/img/功能需求结构.png)
 
 
 
