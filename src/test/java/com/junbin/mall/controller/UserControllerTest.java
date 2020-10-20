@@ -1,6 +1,7 @@
 package com.junbin.mall.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.junbin.mall.dto.UserDto;
 import com.junbin.mall.dto.UserLoginDto;
 import com.junbin.mall.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,6 +32,7 @@ public class UserControllerTest {
     ObjectMapper objectMapper = new ObjectMapper();
 
     private UserLoginDto userLoginDto;
+    private UserDto userDto;
 
     @BeforeEach
     public void beforeEach() {
@@ -38,6 +40,13 @@ public class UserControllerTest {
                        .name("junbin")
                        .password("123456")
                        .build();
+
+        userDto = userDto.builder()
+                  .name("rr")
+                  .password("123567")
+                  .phone("18117828787")
+                  .address("1street")
+                  .build();
     }
 
     @Nested
@@ -79,7 +88,59 @@ public class UserControllerTest {
                     .andExpect(status().isBadRequest())
                     .andExpect(jsonPath("$.message", is("用户密码不能为空")));
         }
-
     }
 
+    @Nested
+    class register{
+        @Test
+        public void should_return_created_when_user_info_is_correct() throws Exception {
+            when(userService.register(userDto)).thenReturn(userDto);
+
+            String jsonData = objectMapper.writeValueAsString(userDto);
+            mockMvc.perform(post("/user/register")
+                    .content(jsonData)
+                    .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isCreated());
+            verify(userService).register(userDto);
+        }
+
+        @Test
+        public void should_throw_exception_when_password_less_than_six() throws Exception {
+            when(userService.register(userDto)).thenReturn(userDto);
+
+            userDto.setPassword("1234");
+            String jsonData = objectMapper.writeValueAsString(userDto);
+            mockMvc.perform(post("/user/register")
+                    .content(jsonData)
+                    .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isBadRequest())
+                    .andExpect(jsonPath("$.message", is("密码长度不能小于6")));
+        }
+
+        @Test
+        public void should_throw_exception_when_phone_length_is_not_eleven() throws Exception {
+            when(userService.register(userDto)).thenReturn(userDto);
+
+            userDto.setPhone("18118239");
+            String jsonData = objectMapper.writeValueAsString(userDto);
+            mockMvc.perform(post("/user/register")
+                    .content(jsonData)
+                    .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isBadRequest())
+                    .andExpect(jsonPath("$.message", is("联系方式长度为11")));
+        }
+
+        @Test
+        public void should_throw_exception_when_address_is_empty() throws Exception {
+            when(userService.register(userDto)).thenReturn(userDto);
+
+            userDto.setAddress("");
+            String jsonData = objectMapper.writeValueAsString(userDto);
+            mockMvc.perform(post("/user/register")
+                    .content(jsonData)
+                    .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isBadRequest())
+                    .andExpect(jsonPath("$.message", is("用户地址不能为空")));
+        }
+    }
 }

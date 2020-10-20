@@ -1,6 +1,7 @@
 package com.junbin.mall.controller;
 
 import com.junbin.mall.domain.User;
+import com.junbin.mall.dto.UserDto;
 import com.junbin.mall.dto.UserLoginDto;
 import com.junbin.mall.service.UserService;
 import com.junbin.mall.utils.ConvertTool;
@@ -13,6 +14,7 @@ import javax.validation.Valid;
 @CrossOrigin
 @RequestMapping("/user")
 public class UserController {
+
     private final UserService userService;
 
     public UserController(UserService userService) {
@@ -23,5 +25,11 @@ public class UserController {
     @ResponseStatus(HttpStatus.OK)
     public UserLoginDto login(@Valid @RequestBody UserLoginDto userLoginDto) {
         return userService.login(userLoginDto);
+    }
+
+    @PostMapping("/register")
+    @ResponseStatus(HttpStatus.CREATED)
+    public UserDto register(@Valid @RequestBody UserDto userDto) {
+        return userService.register(userDto);
     }
 }
