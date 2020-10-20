@@ -18,6 +18,7 @@ import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @AutoConfigureJsonTesters
@@ -141,6 +142,21 @@ public class UserControllerTest {
                     .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isBadRequest())
                     .andExpect(jsonPath("$.message", is("用户地址不能为空")));
+        }
+    }
+
+    @Nested
+    class getUserInfo{
+        @Test
+        public void should_return_user_info_when_user_is_exist() throws Exception {
+            String name = userDto.getName();
+            when(userService.getUser(name)).thenReturn(userDto);
+
+            mockMvc.perform(get("/user/"+name))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.name", is("rr")))
+                    .andExpect(jsonPath("$.phone", is("18117828787")));
+
         }
     }
 }

@@ -32,4 +32,10 @@ public class UserController {
     public UserDto register(@Valid @RequestBody UserDto userDto) {
         return userService.register(userDto);
     }
+
+    @GetMapping("/{name}")
+    @ResponseStatus(HttpStatus.OK)
+    public UserDto getUser(@PathVariable String name) {
+        return userService.getUser(name);
+    }
 }

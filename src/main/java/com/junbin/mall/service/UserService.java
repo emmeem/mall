@@ -37,4 +37,11 @@ public class UserService {
       User user =userRepository.save(ConvertTool.convertObject(userDto,User.class));
       return ConvertTool.convertObject(user, UserDto.class);
     }
+
+    public UserDto getUser(String name) {
+        User user = userRepository.findUserByName(name)
+                .orElseThrow(() -> new UserIsNotExistException(ExceptionMessage.USER_NOT_EXIST));
+
+        return ConvertTool.convertObject(user,UserDto.class);
+    }
 }
