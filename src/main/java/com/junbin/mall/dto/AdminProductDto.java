@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Valid
-public class UserProductDto {
+public class AdminProductDto {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private long id;
 
@@ -25,6 +25,7 @@ public class UserProductDto {
 
     private String description;
 
-    private List<Picture> pictures;
+    private Long stock;
 
+    private List<Picture> pictures;
 }

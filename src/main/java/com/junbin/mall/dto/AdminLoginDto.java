@@ -1,5 +1,6 @@
 package com.junbin.mall.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.junbin.mall.exception.ExceptionMessage;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,6 +16,9 @@ import javax.validation.constraints.NotEmpty;
 @AllArgsConstructor
 @Valid
 public class AdminLoginDto {
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private long id;
+
     @NotEmpty(message = ExceptionMessage.ADMIN_NAME_NOT_EMPTY)
     private String name;
 
