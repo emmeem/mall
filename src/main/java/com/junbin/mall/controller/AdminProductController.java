@@ -28,4 +28,10 @@ public class AdminProductController {
     public List<AdminProductDto> getProducts() {
         return adminProductService.getProducts();
     }
+
+    @PatchMapping("/update/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public AdminProductDto update(@PathVariable Long id, @RequestBody AdminProductDto adminProductDto) {
+        return adminProductService.update(id, adminProductDto);
+    }
 }

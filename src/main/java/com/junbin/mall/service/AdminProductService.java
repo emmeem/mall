@@ -3,6 +3,8 @@ package com.junbin.mall.service;
 import com.junbin.mall.domain.Picture;
 import com.junbin.mall.domain.Product;
 import com.junbin.mall.dto.AdminProductDto;
+import com.junbin.mall.exception.ExceptionMessage;
+import com.junbin.mall.exception.ProductIsNotExistException;
 import com.junbin.mall.repository.ProductRepository;
 import com.junbin.mall.utils.ConvertTool;
 import org.springframework.stereotype.Service;
@@ -29,6 +31,16 @@ public class AdminProductService {
         List<Picture> pictures = pictureList.stream().peek(t-> t.setProduct(product)).collect(Collectors.toList());
 
         product.setPictures(pictures);
+        Product newProduct = productRepository.save(product);
+        return ConvertTool.convertObject(newProduct, AdminProductDto.class);
+    }
+
+    public AdminProductDto update(Long id, AdminProductDto adminProductDto) {
+        productRepository.findById(id)
+                .orElseThrow(() -> new ProductIsNotExistException(ExceptionMessage.PRODUCT_NOT_EXIST));
+
+        Product product = ConvertTool.convertObject(adminProductDto, Product.class);
+        product.setId(id);
         Product newProduct = productRepository.save(product);
         return ConvertTool.convertObject(newProduct, AdminProductDto.class);
     }

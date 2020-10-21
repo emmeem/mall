@@ -20,4 +20,6 @@ public class ExceptionMessage {
     public static final String ADMIN_NAME_NOT_EMPTY = "管理员名字不能为空";
     public static final String ADMIN_PASSWORD_NOT_EMPTY = "管理员密码不能为空";
 
+    public static final String PRODUCT_NOT_EXIST = "产品不存在";
+
 }

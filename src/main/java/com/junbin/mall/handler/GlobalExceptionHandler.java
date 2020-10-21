@@ -1,6 +1,7 @@
 package com.junbin.mall.handler;
 
 import com.junbin.mall.error.ErrorResult;
+import com.junbin.mall.exception.ProductIsNotExistException;
 import com.junbin.mall.exception.UserIsNotExistException;
 import com.junbin.mall.exception.UserPasswordIsNotCorrectException;
 import org.springframework.http.HttpStatus;
@@ -18,7 +19,7 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResult);
     }
 
-    @ExceptionHandler(UserIsNotExistException.class)
+    @ExceptionHandler({UserIsNotExistException.class, ProductIsNotExistException.class})
     public ResponseEntity<ErrorResult> existHandler(Exception ex) {
         ErrorResult errorResult = new ErrorResult(ex.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResult);

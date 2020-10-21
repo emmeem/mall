@@ -22,6 +22,4 @@ public class AdminController {
     public AdminLoginDto login(@Valid @RequestBody AdminLoginDto adminLoginDto) {
         return adminService.login(adminLoginDto);
     }
-
-
 }

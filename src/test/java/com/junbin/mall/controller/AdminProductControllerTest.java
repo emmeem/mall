@@ -13,14 +13,16 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @AutoConfigureJsonTesters
@@ -84,6 +86,23 @@ public class AdminProductControllerTest {
                     .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk());
             verify(adminProductService).getProducts();
+        }
+    }
+
+    @Nested
+    class update {
+        @Test
+        public void should_return_ok_when_product_info_is_update() throws Exception {
+            when(adminProductService.createProduct(adminProductDto)).thenReturn(adminProductDto);
+            adminProductDto.setStock(10L);
+            when(adminProductService.update(adminProductDto.getId(),adminProductDto)).thenReturn(adminProductDto);
+
+            String jsonData = objectMapper.writeValueAsString(adminProductDto);
+            mockMvc.perform(patch("/admin/product/update/1")
+                    .content(jsonData)
+                    .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isOk());
+            verify(adminProductService).update(1L,adminProductDto);
         }
     }
 }
