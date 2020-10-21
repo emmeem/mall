@@ -1,10 +1,8 @@
 package com.junbin.mall.controller;
 
-import com.junbin.mall.domain.User;
 import com.junbin.mall.dto.UserDto;
 import com.junbin.mall.dto.UserLoginDto;
 import com.junbin.mall.service.UserService;
-import com.junbin.mall.utils.ConvertTool;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 

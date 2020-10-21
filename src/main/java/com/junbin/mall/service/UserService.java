@@ -9,7 +9,6 @@ import com.junbin.mall.exception.UserIsNotExistException;
 import com.junbin.mall.exception.UserPasswordIsNotCorrectException;
 import com.junbin.mall.repository.UserRepository;
 import com.junbin.mall.utils.ConvertTool;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
