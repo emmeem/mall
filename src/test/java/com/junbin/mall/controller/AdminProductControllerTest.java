@@ -3,7 +3,7 @@ package com.junbin.mall.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.junbin.mall.domain.Picture;
 import com.junbin.mall.dto.AdminProductDto;
-import com.junbin.mall.service.ProductService;
+import com.junbin.mall.service.AdminProductService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -19,6 +19,7 @@ import java.util.List;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -26,7 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(AdminProductController.class)
 public class AdminProductControllerTest {
     @MockBean
-    private ProductService productService;
+    private AdminProductService adminProductService;
     @Autowired
     private MockMvc mockMvc;
 
@@ -58,14 +59,31 @@ public class AdminProductControllerTest {
     class create{
         @Test
         public void should_return_created_when_product_info_is_correct() throws Exception {
-            when(productService.createProduct(adminProductDto)).thenReturn(adminProductDto);
+            when(adminProductService.createProduct(adminProductDto)).thenReturn(adminProductDto);
 
             String jsonData = objectMapper.writeValueAsString(adminProductDto);
             mockMvc.perform(post("/admin/product")
                     .content(jsonData)
                     .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isCreated());
-            verify(productService).createProduct(adminProductDto);
+            verify(adminProductService).createProduct(adminProductDto);
+        }
+    }
+
+    @Nested
+    class getProducts {
+        @Test
+        public void should_return_product_list() throws Exception {
+            List<AdminProductDto> adminProductDtos = new ArrayList<>();
+            adminProductDtos.add(adminProductDto);
+            when(adminProductService.getProducts()).thenReturn(adminProductDtos);
+
+            String jsonData = objectMapper.writeValueAsString(adminProductDtos);
+            mockMvc.perform(get("/admin/product")
+                    .content(jsonData)
+                    .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isOk());
+            verify(adminProductService).getProducts();
         }
     }
 }

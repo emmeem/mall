@@ -1,7 +1,7 @@
 package com.junbin.mall.controller;
 
 import com.junbin.mall.dto.UserProductDto;
-import com.junbin.mall.service.ProductService;
+import com.junbin.mall.service.UserProductService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,16 +12,16 @@ import java.util.List;
 @RequestMapping("/product")
 public class ProductController {
 
-    private final ProductService productService;
+    private final UserProductService userProductService;
 
-    public ProductController(ProductService productService) {
-        this.productService = productService;
+    public ProductController(UserProductService userProductService) {
+        this.userProductService = userProductService;
     }
 
-    @GetMapping("/{name}")
+    @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<UserProductDto> getProductList() {
-        return productService.getProducts();
+    public List<UserProductDto> getProducts() {
+        return userProductService.getProducts();
     }
 
 }

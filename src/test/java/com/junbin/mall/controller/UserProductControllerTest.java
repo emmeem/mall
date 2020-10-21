@@ -3,7 +3,7 @@ package com.junbin.mall.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.junbin.mall.domain.Picture;
 import com.junbin.mall.dto.UserProductDto;
-import com.junbin.mall.service.ProductService;
+import com.junbin.mall.service.UserProductService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -24,9 +24,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @AutoConfigureJsonTesters
 @WebMvcTest(ProductController.class)
-public class ProductControllerTest {
+public class UserProductControllerTest {
     @MockBean
-    private ProductService productService;
+    private UserProductService productService;
     @Autowired
     private MockMvc mockMvc;
 
@@ -62,7 +62,7 @@ public class ProductControllerTest {
             when(productService.getProducts()).thenReturn(userProductDtos);
 
             String jsonData = objectMapper.writeValueAsString(userProductDtos);
-            mockMvc.perform(get("/product/"+ userProductDto.getName())
+            mockMvc.perform(get("/product")
                     .content(jsonData)
                     .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk());
