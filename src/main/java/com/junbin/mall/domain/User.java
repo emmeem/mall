@@ -1,14 +1,13 @@
 package com.junbin.mall.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Data
 @Builder
@@ -16,10 +15,9 @@ import javax.persistence.Id;
 @AllArgsConstructor
 @Entity
 public class User {
-
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private long Id;
+    private Long Id;
 
     private String name;
 
@@ -28,4 +26,8 @@ public class User {
     private String phone;
 
     private String address;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<MallOrder> orders;
 }

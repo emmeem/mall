@@ -5,19 +5,26 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Admin {
+public class Mission {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long Id;
 
-    private String name;
+    private String explanation;
 
-    private String password;
+    private String tips;
+
+    private String content;
+
+    private Long couponId;
 }

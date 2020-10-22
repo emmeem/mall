@@ -6,28 +6,22 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Product {
+public class OrderItem {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long Id;
 
-    private Integer companyId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "mallOrderId")
+    private MallOrder order;
 
-    private String name;
-
-    private Double price;
-
-    private String description;
-
-    private Long stock;
-
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Picture> pictures;
+    @OneToOne
+    @JoinColumn(name = "productId")
+    private Product product;
 }

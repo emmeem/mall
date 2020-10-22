@@ -47,7 +47,7 @@ public class UserProductControllerTest {
 
         userProductDto = userProductDto.builder()
                 .name("liao")
-                .price(14)
+                .price(14.00)
                 .description("a good product")
                 .pictures(pictures)
                 .build();

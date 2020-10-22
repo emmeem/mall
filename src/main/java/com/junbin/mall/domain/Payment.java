@@ -5,29 +5,21 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
-import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Product {
+public class Payment {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long Id;
 
-    private Integer companyId;
-
     private String name;
 
-    private Double price;
-
-    private String description;
-
-    private Long stock;
-
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Picture> pictures;
 }

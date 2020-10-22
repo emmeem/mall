@@ -6,28 +6,31 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Date;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Product {
+public class Coupon {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long Id;
 
-    private Integer companyId;
+    private String type;
 
     private String name;
 
-    private Double price;
+    private Integer count;
 
-    private String description;
+    private Integer amount;
 
-    private Long stock;
+    private Date start_time;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Picture> pictures;
+    private Date end_time;
+
+    private String note;
+
+    private Long companyId;
 }
