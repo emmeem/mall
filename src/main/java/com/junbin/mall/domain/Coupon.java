@@ -32,5 +32,5 @@ public class Coupon {
 
     private String note;
 
-    private Long companyId;
+    private String companyName;
 }

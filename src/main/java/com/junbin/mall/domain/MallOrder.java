@@ -19,6 +19,8 @@ public class MallOrder {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long Id;
 
+    private String orderNumber;
+
     private Date createTime;
 
     private Date updateTime;

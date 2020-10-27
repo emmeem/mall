@@ -48,6 +48,7 @@ public class AdminProductControllerTest {
 
         adminProductDto = adminProductDto.builder()
                 .name("liao")
+                .companyId(1)
                 .price(14.00)
                 .description("a good product")
                 .stock(15L)

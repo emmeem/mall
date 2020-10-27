@@ -21,6 +21,8 @@ public class AdminProductDto {
 
     private String name;
 
+    private Integer companyId;
+
     private Double price;
 
     private String description;

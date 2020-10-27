@@ -21,6 +21,8 @@ public class UserProductDto {
 
     private String name;
 
+    private Integer companyId;
+
     private Double price;
 
     private String description;
