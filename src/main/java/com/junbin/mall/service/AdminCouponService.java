@@ -36,6 +36,18 @@ public class AdminCouponService {
         return ConvertTool.convertObject(newCoupon, AdminCouponDto.class);
     }
 
+    public void deleteCoupon(Long id) {
+        Optional<Coupon> coupon = couponRepository.findById(id);
+        if(!coupon.isPresent()) {
+            throw new CouponIsNotExistException(ExceptionMessage.COUPON_IS_NOT_EXIST);
+        }
+        List<UserCoupon> userCoupons = userCouponRepository.findAllByCouponId(id);
+        if(!userCoupons.isEmpty()) {
+            userCouponRepository.deleteByCouponId(id);
+        }
+        couponRepository.deleteById(id);
+    }
+
     public List<AdminCouponDto> getCoupons(String companyName) {
         List<Coupon> coupons = couponRepository.findCouponByCompanyName(companyName);
 

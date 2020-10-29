@@ -24,13 +24,19 @@ public class AdminCouponController {
         return adminCouponService.createCoupon(adminCouponDto);
     }
 
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteCoupon(@PathVariable Long id) {
+        adminCouponService.deleteCoupon(id);
+    }
+
     @GetMapping("/{companyName}")
     @ResponseStatus(HttpStatus.OK)
     public List<AdminCouponDto> getCoupons(@PathVariable String companyName) {
         return adminCouponService.getCoupons(companyName);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/userCoupon/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteUserCoupon(@PathVariable Long id) {
         adminCouponService.deleteUserCoupon(id);

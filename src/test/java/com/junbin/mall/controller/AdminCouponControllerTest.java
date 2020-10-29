@@ -91,5 +91,4 @@ public class AdminCouponControllerTest {
             verify(adminCouponService).getCoupons(companyName);
         }
     }
-
 }
