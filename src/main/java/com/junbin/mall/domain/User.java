@@ -27,6 +27,8 @@ public class User {
 
     private String address;
 
+    private String tag;
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<MallOrder> orders;

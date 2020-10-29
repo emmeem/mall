@@ -3,7 +3,7 @@ package com.junbin.mall.service;
 import com.junbin.mall.domain.Admin;
 import com.junbin.mall.domain.User;
 import com.junbin.mall.dto.AdminLoginDto;
-import com.junbin.mall.dto.UserDto;
+import com.junbin.mall.dto.AdminUserDto;
 import com.junbin.mall.exception.ExceptionMessage;
 import com.junbin.mall.exception.UserIsNotExistException;
 import com.junbin.mall.exception.UserPasswordIsNotCorrectException;
@@ -13,6 +13,7 @@ import com.junbin.mall.utils.ConvertTool;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AdminService {
@@ -35,9 +36,19 @@ public class AdminService {
         return ConvertTool.convertObject(admin,AdminLoginDto.class);
     }
 
-    public List<UserDto> getUsers(){
+    public List<AdminUserDto> getUsers(){
         List<User> users = userRepository.findAll();
 
-        return ConvertTool.convertList(users, UserDto.class);
+        return ConvertTool.convertList(users, AdminUserDto.class);
+    }
+
+    public AdminUserDto setUserTag(Long id, String tag) {
+        Optional<User> user = userRepository.findById(id);
+        if(!user.isPresent()) {
+            throw new UserIsNotExistException(ExceptionMessage.USER_NOT_EXIST);
+        }
+        user.get().setTag(tag);
+        User userAfterSetTag = userRepository.save(user.get());
+        return ConvertTool.convertObject(userAfterSetTag, AdminUserDto.class);
     }
 }

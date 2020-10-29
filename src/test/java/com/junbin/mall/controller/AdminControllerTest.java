@@ -2,6 +2,7 @@ package com.junbin.mall.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.junbin.mall.dto.AdminLoginDto;
+import com.junbin.mall.dto.AdminUserDto;
 import com.junbin.mall.dto.UserDto;
 import com.junbin.mall.service.AdminService;
 import org.junit.jupiter.api.BeforeEach;
@@ -37,7 +38,7 @@ public class AdminControllerTest {
     ObjectMapper objectMapper = new ObjectMapper();
 
     private AdminLoginDto adminLoginDto;
-    private UserDto userDto;
+    private AdminUserDto adminUserDto;
 
     @BeforeEach
     public void beforeEach() {
@@ -46,7 +47,7 @@ public class AdminControllerTest {
                 .password("123456")
                 .build();
 
-        userDto = userDto.builder()
+        adminUserDto = adminUserDto.builder()
                 .name("rr")
                 .password("123567")
                 .phone("18117828787")
@@ -98,14 +99,27 @@ public class AdminControllerTest {
     class userManage {
         @Test
         public void should_return_user_list() throws Exception {
-            List<UserDto> userDtos = new ArrayList<>();
-            userDtos.add(userDto);
-            when(adminService.getUsers()).thenReturn(userDtos);
+            List<AdminUserDto> adminUserDtos = new ArrayList<>();
+            adminUserDtos.add(adminUserDto);
+            when(adminService.getUsers()).thenReturn(adminUserDtos);
 
             mockMvc.perform(get("/admin/userList"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$", hasSize(1)))
                     .andExpect(jsonPath("$[0].phone", is("18117828787")));
+
+        }
+
+        @Test
+        public void should_return_success_when_set_user_tag() throws Exception {
+            Long id = 1L;
+            String tag = "Electronics enthusiast";
+            adminUserDto.setTag(tag);
+            when(adminService.setUserTag(1L, tag)).thenReturn(adminUserDto);
+
+            mockMvc.perform(post("/admin/user/"+id+"/"+tag))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.tag", is("Electronics enthusiast")));
 
         }
     }
