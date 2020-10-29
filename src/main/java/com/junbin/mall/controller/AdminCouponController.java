@@ -29,4 +29,10 @@ public class AdminCouponController {
     public List<AdminCouponDto> getCoupons(@PathVariable String companyName) {
         return adminCouponService.getCoupons(companyName);
     }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteUserCoupon(@PathVariable Long id) {
+        adminCouponService.deleteUserCoupon(id);
+    }
 }

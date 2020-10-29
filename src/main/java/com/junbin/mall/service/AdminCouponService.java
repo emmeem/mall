@@ -1,11 +1,13 @@
 package com.junbin.mall.service;
 
 import com.junbin.mall.domain.Coupon;
+import com.junbin.mall.domain.UserCoupon;
 import com.junbin.mall.dto.AdminCouponDto;
 import com.junbin.mall.exception.CouponIsExistException;
 import com.junbin.mall.exception.CouponIsNotExistException;
 import com.junbin.mall.exception.ExceptionMessage;
 import com.junbin.mall.repository.CouponRepository;
+import com.junbin.mall.repository.UserCouponRepository;
 import com.junbin.mall.utils.ConvertTool;
 import org.springframework.stereotype.Service;
 
@@ -16,10 +18,13 @@ import java.util.Optional;
 public class AdminCouponService {
     private final CouponRepository couponRepository;
 
-    public AdminCouponService(CouponRepository couponRepository) {
-        this.couponRepository = couponRepository;
-    }
+    private final UserCouponRepository userCouponRepository;
 
+    public AdminCouponService(CouponRepository couponRepository, UserCouponRepository userCouponRepository) {
+
+        this.couponRepository = couponRepository;
+        this.userCouponRepository = userCouponRepository;
+    }
 
     public AdminCouponDto createCoupon(AdminCouponDto adminCouponDto) {
         Optional<Coupon> coupon = couponRepository.findCouponByName(adminCouponDto.getName());
@@ -35,8 +40,16 @@ public class AdminCouponService {
         List<Coupon> coupons = couponRepository.findCouponByCompanyName(companyName);
 
         if(coupons.isEmpty()) {
-            throw new CouponIsNotExistException(ExceptionMessage.A_COUPON_IS_NOT_EXIST);
+            throw new CouponIsNotExistException(ExceptionMessage.COUPON_IS_NOT_EXIST);
         }
         return ConvertTool.convertList(coupons, AdminCouponDto.class);
+    }
+
+    public void deleteUserCoupon(Long id) {
+        Optional<UserCoupon> userCoupon = userCouponRepository.findById(id);
+        if(!userCoupon.isPresent()) {
+            throw new CouponIsNotExistException(ExceptionMessage.COUPON_IS_NOT_EXIST);
+        }
+        userCouponRepository.deleteById(id);
     }
 }

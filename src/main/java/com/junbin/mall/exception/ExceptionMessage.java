@@ -22,8 +22,8 @@ public class ExceptionMessage {
 
     public static final String PRODUCT_NOT_EXIST = "产品不存在";
 
-    public static final String A_COUPON_IS_NOT_EXIST = "A公司优惠券暂不存在";
     public static final String COUPON_IS_EXIST = "优惠券已存在";
+    public static final String COUPON_IS_NOT_EXIST = "该优惠券不存在";
     public static final String COUPON_COUNT_NOT_EMPTY ="优惠券数量不能为空";
     public static final String COUPON_AMOUNT_NOT_EMPTY ="优惠券金额不能为空";
     public static final String COUPON_START_TIME_NOT_EMPTY ="优惠券启用时间不能为空";

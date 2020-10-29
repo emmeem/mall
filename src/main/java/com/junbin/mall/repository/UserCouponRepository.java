@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserCouponRepository extends CrudRepository<UserCoupon, Long> {
 
+    void deleteById(Long id);
 }

@@ -21,8 +21,7 @@ public class AdminService {
 
     private final UserRepository userRepository;
 
-    public AdminService(AdminRepository adminRepository
-    ,UserRepository userRepository) {
+    public AdminService(AdminRepository adminRepository, UserRepository userRepository) {
         this.adminRepository = adminRepository;
         this.userRepository = userRepository;
     }
