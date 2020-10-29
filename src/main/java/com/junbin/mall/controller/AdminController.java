@@ -1,11 +1,13 @@
 package com.junbin.mall.controller;
 
 import com.junbin.mall.dto.AdminLoginDto;
+import com.junbin.mall.dto.UserDto;
 import com.junbin.mall.service.AdminService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @CrossOrigin
@@ -22,4 +24,11 @@ public class AdminController {
     public AdminLoginDto login(@Valid @RequestBody AdminLoginDto adminLoginDto) {
         return adminService.login(adminLoginDto);
     }
+
+    @GetMapping("/userList")
+    @ResponseStatus(HttpStatus.OK)
+    public List<UserDto> getUsers() {
+        return adminService.getUsers();
+    }
+
 }

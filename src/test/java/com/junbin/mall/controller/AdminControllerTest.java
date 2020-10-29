@@ -2,6 +2,7 @@ package com.junbin.mall.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.junbin.mall.dto.AdminLoginDto;
+import com.junbin.mall.dto.UserDto;
 import com.junbin.mall.service.AdminService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -13,9 +14,14 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -31,12 +37,20 @@ public class AdminControllerTest {
     ObjectMapper objectMapper = new ObjectMapper();
 
     private AdminLoginDto adminLoginDto;
+    private UserDto userDto;
 
     @BeforeEach
     public void beforeEach() {
         adminLoginDto = adminLoginDto.builder()
                 .name("liao")
                 .password("123456")
+                .build();
+
+        userDto = userDto.builder()
+                .name("rr")
+                .password("123567")
+                .phone("18117828787")
+                .address("1street")
                 .build();
     }
     @Nested
@@ -77,6 +91,22 @@ public class AdminControllerTest {
                     .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isBadRequest())
                     .andExpect(jsonPath("$.message", is("管理员密码不能为空")));
+        }
+    }
+
+    @Nested
+    class userManage {
+        @Test
+        public void should_return_user_list() throws Exception {
+            List<UserDto> userDtos = new ArrayList<>();
+            userDtos.add(userDto);
+            when(adminService.getUsers()).thenReturn(userDtos);
+
+            mockMvc.perform(get("/admin/userList"))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$", hasSize(1)))
+                    .andExpect(jsonPath("$[0].phone", is("18117828787")));
+
         }
     }
 }
