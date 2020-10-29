@@ -1,6 +1,7 @@
 package com.junbin.mall.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.junbin.mall.domain.UserCoupon;
 import com.junbin.mall.exception.ExceptionMessage;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,6 +10,7 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.Valid;
 import javax.validation.constraints.*;
+import java.util.List;
 
 @Data
 @Builder
@@ -32,4 +34,7 @@ public class UserDto {
 
     @NotEmpty(message = ExceptionMessage.USER_ADDRESS_NOT_EMPTY)
     private String address;
+
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private List<UserCoupon> userCoupons;
 }

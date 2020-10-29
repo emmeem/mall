@@ -1,12 +1,11 @@
 package com.junbin.mall.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Builder
@@ -33,4 +32,8 @@ public class Coupon {
     private String note;
 
     private String companyName;
+
+    @OneToMany(mappedBy = "coupon", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<UserCoupon> userCoupons;
 }

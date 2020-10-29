@@ -1,23 +1,40 @@
 package com.junbin.mall.service;
 
+import com.junbin.mall.domain.Coupon;
 import com.junbin.mall.domain.User;
+import com.junbin.mall.domain.UserCoupon;
 import com.junbin.mall.dto.UserDto;
 import com.junbin.mall.dto.UserLoginDto;
 import com.junbin.mall.exception.ExceptionMessage;
 import com.junbin.mall.exception.UserIsExistException;
 import com.junbin.mall.exception.UserIsNotExistException;
 import com.junbin.mall.exception.UserPasswordIsNotCorrectException;
+import com.junbin.mall.repository.CouponRepository;
+import com.junbin.mall.repository.UserCouponRepository;
 import com.junbin.mall.repository.UserRepository;
 import com.junbin.mall.utils.ConvertTool;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class UserService {
 
     private final UserRepository userRepository;
 
-    public UserService (UserRepository userRepository) {
+    private final CouponRepository couponRepository;
+
+    private final UserCouponRepository userCouponRepository;
+
+    private UserCoupon userCoupon;
+
+    public UserService (UserRepository userRepository, CouponRepository couponRepository,
+                        UserCouponRepository userCouponRepository
+                        ) {
         this.userRepository = userRepository;
+        this.couponRepository = couponRepository;
+        this.userCouponRepository = userCouponRepository;
     }
 
     public UserLoginDto login(UserLoginDto userLoginDto) {
@@ -29,12 +46,31 @@ public class UserService {
        return ConvertTool.convertObject(user,UserLoginDto.class);
     }
 
+    private User setCoupon(User user, String companyName, String couponType) {
+        Coupon coupon = couponRepository.findCouponByCompanyNameAndType(companyName, couponType);
+        userCoupon = userCoupon.builder()
+                     .coupon(coupon)
+                     .user(user)
+                     .build();
+
+        List<UserCoupon> userCoupons = new ArrayList<>();
+        userCoupons.add(userCoupon);
+        user.setUserCoupons(userCoupons);
+        return user;
+    }
+
     public UserDto register(UserDto userDto) {
       if(userRepository.findUserByName(userDto.getName()).isPresent()) {
           throw new UserIsExistException(ExceptionMessage.USER_IS_EXIST);
       }
-      User user =userRepository.save(ConvertTool.convertObject(userDto,User.class));
-      return ConvertTool.convertObject(user, UserDto.class);
+
+      User user = ConvertTool.convertObject(userDto,User.class);
+      String companyName = "A";
+      String couponType = "All";
+      User userAfterSetCoupon = setCoupon(user, companyName, couponType);
+      User newUser =userRepository.save(userAfterSetCoupon);
+
+      return ConvertTool.convertObject(newUser, UserDto.class);
     }
 
     public UserDto getUser(String name) {
