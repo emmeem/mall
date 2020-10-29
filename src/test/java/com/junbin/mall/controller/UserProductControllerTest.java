@@ -17,9 +17,12 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @AutoConfigureJsonTesters
@@ -62,10 +65,9 @@ public class UserProductControllerTest {
             userProductDtos.add(userProductDto);
             when(productService.getProducts()).thenReturn(userProductDtos);
 
-            String jsonData = objectMapper.writeValueAsString(userProductDtos);
-            mockMvc.perform(get("/product")
-                    .content(jsonData)
-                    .contentType(MediaType.APPLICATION_JSON))
+            mockMvc.perform(get("/product"))
+                    .andExpect(jsonPath("$", hasSize(1)))
+                    .andExpect(jsonPath("$[0].description", is("a good product")))
                     .andExpect(status().isOk());
             verify(productService).getProducts();
         }

@@ -15,10 +15,16 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -65,6 +71,24 @@ public class AdminCouponControllerTest {
                     .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isCreated());
             verify(adminCouponService).createCoupon(adminCouponDto);
+        }
+    }
+
+    @Nested
+    class get{
+        @Test
+        public void should_return_coupon_list() throws Exception {
+            List<AdminCouponDto> adminCouponDtos = new ArrayList<>();
+            adminCouponDtos.add(adminCouponDto);
+            String companyName = adminCouponDto.getCompanyName();
+            when(adminCouponService.getCoupons(companyName))
+                    .thenReturn(adminCouponDtos);
+
+            mockMvc.perform(get("/admin/coupon/"+companyName))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$", hasSize(1)))
+                    .andExpect(jsonPath("$[0].companyName", is("A")));
+            verify(adminCouponService).getCoupons(companyName);
         }
     }
 

@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @CrossOrigin
@@ -23,4 +24,9 @@ public class AdminCouponController {
         return adminCouponService.createCoupon(adminCouponDto);
     }
 
+    @GetMapping("/{companyName}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<AdminCouponDto> getCoupons(@PathVariable String companyName) {
+        return adminCouponService.getCoupons(companyName);
+    }
 }
