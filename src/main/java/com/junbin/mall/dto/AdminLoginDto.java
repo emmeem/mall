@@ -17,7 +17,7 @@ import javax.validation.constraints.NotEmpty;
 @Valid
 public class AdminLoginDto {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private long id;
+    private Long id;
 
     @NotEmpty(message = ExceptionMessage.ADMIN_NAME_NOT_EMPTY)
     private String name;

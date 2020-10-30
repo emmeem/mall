@@ -17,7 +17,7 @@ import javax.validation.constraints.NotEmpty;
 @Builder
 public class UserLoginDto {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private long id;
+    private Long id;
 
     @NotEmpty(message = ExceptionMessage.USER_NAME_NOT_EMPTY)
     private String name;

@@ -19,7 +19,7 @@ import java.util.Date;
 @Valid
 public class AdminCouponDto {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private Long Id;
+    private Long id;
 
     private String type;
 

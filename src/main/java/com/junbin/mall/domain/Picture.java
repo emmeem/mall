@@ -16,7 +16,7 @@ import javax.persistence.*;
 public class Picture {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
 
     private String name;
 

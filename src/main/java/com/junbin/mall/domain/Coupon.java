@@ -15,7 +15,7 @@ import java.util.List;
 public class Coupon {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
 
     private String type;
 

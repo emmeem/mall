@@ -17,7 +17,7 @@ import java.util.List;
 @Valid
 public class UserProductDto {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private long id;
+    private Long id;
 
     private String name;
 

@@ -19,7 +19,7 @@ import java.util.List;
 @Valid
 public class UserDto {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private long id;
+    private Long id;
 
     @NotEmpty(message = ExceptionMessage.USER_NAME_NOT_EMPTY)
     private String name;

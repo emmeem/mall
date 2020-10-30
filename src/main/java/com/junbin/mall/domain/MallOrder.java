@@ -17,7 +17,7 @@ import java.util.List;
 public class MallOrder {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
 
     private String orderNumber;
 
@@ -28,6 +28,8 @@ public class MallOrder {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId")
     private User user;
+
+    private Integer status;
 
     private Double totalPrice;
 
