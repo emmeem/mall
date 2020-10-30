@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.json.AutoConfigureJsonTesters;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
@@ -29,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(ProductController.class)
 public class UserProductControllerTest {
     @MockBean
-    private UserProductService productService;
+    private UserProductService userProductService;
     @Autowired
     private MockMvc mockMvc;
 
@@ -50,7 +49,7 @@ public class UserProductControllerTest {
 
         userProductDto = userProductDto.builder()
                 .name("liao")
-                .companyId(1)
+                .companyName("A")
                 .price(14.00)
                 .description("a good product")
                 .pictures(pictures)
@@ -63,13 +62,28 @@ public class UserProductControllerTest {
         public void should_return_product_list() throws Exception {
             List<UserProductDto> userProductDtos = new ArrayList<>();
             userProductDtos.add(userProductDto);
-            when(productService.getProducts()).thenReturn(userProductDtos);
+            when(userProductService.getProducts()).thenReturn(userProductDtos);
 
             mockMvc.perform(get("/product"))
                     .andExpect(jsonPath("$", hasSize(1)))
                     .andExpect(jsonPath("$[0].description", is("a good product")))
                     .andExpect(status().isOk());
-            verify(productService).getProducts();
+            verify(userProductService).getProducts();
+        }
+
+        @Test
+        public void should_return_a_company_product_list() throws Exception {
+            List<UserProductDto> userProductDtos = new ArrayList<>();
+            userProductDtos.add(userProductDto);
+            String companyName = userProductDto.getCompanyName();
+            when(userProductService.getProductsByCompanyName(companyName))
+                    .thenReturn(userProductDtos);
+
+            mockMvc.perform(get("/product/"+companyName))
+                    .andExpect(jsonPath("$", hasSize(1)))
+                    .andExpect(jsonPath("$[0].companyName", is("A")))
+                    .andExpect(status().isOk());
+            verify(userProductService).getProductsByCompanyName(companyName);
         }
     }
 

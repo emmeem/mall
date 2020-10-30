@@ -20,4 +20,10 @@ public class UserProductService {
         List<Product> products = productRepository.findAll();
         return ConvertTool.convertList(products, UserProductDto.class);
     }
+
+    public List<UserProductDto> getProductsByCompanyName(String companyName) {
+        List<Product> products = productRepository.findAllByCompanyName(companyName);
+
+        return ConvertTool.convertList(products, UserProductDto.class);
+    }
 }

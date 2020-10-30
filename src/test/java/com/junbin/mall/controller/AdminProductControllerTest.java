@@ -51,7 +51,7 @@ public class AdminProductControllerTest {
 
         adminProductDto = adminProductDto.builder()
                 .name("liao")
-                .companyId(1)
+                .companyName("A")
                 .price(14.00)
                 .description("a good product")
                 .stock(15L)
@@ -79,14 +79,15 @@ public class AdminProductControllerTest {
         public void should_return_product_list() throws Exception {
             List<AdminProductDto> adminProductDtos = new ArrayList<>();
             adminProductDtos.add(adminProductDto);
-            when(adminProductService.getProducts()).thenReturn(adminProductDtos);
+            when(adminProductService.getProducts(adminProductDto.getCompanyName()))
+                    .thenReturn(adminProductDtos);
 
             mockMvc.perform(get("/admin/product")
                     .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(jsonPath("$", hasSize(1)))
                     .andExpect(jsonPath("$[0].description", is("a good product")))
                     .andExpect(status().isOk());
-            verify(adminProductService).getProducts();
+            verify(adminProductService).getProducts(adminProductDto.getCompanyName());
         }
     }
 

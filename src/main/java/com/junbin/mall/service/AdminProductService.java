@@ -20,8 +20,8 @@ public class AdminProductService {
         this.productRepository = productRepository;
     }
 
-    public List<AdminProductDto> getProducts() {
-        List<Product> products = productRepository.findAll();
+    public List<AdminProductDto> getProducts(String companyName) {
+        List<Product> products = productRepository.findAllByCompanyName(companyName);
         return ConvertTool.convertList(products, AdminProductDto.class);
     }
 
