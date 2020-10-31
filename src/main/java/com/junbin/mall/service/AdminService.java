@@ -3,13 +3,11 @@ package com.junbin.mall.service;
 import com.junbin.mall.domain.Admin;
 import com.junbin.mall.domain.Company;
 import com.junbin.mall.domain.User;
+import com.junbin.mall.dto.AdminDto;
 import com.junbin.mall.dto.AdminLoginDto;
 import com.junbin.mall.dto.AdminUserDto;
 import com.junbin.mall.dto.CompanyDto;
-import com.junbin.mall.exception.CompanyIsExistException;
-import com.junbin.mall.exception.ExceptionMessage;
-import com.junbin.mall.exception.UserIsNotExistException;
-import com.junbin.mall.exception.UserPasswordIsNotCorrectException;
+import com.junbin.mall.exception.*;
 import com.junbin.mall.repository.AdminRepository;
 import com.junbin.mall.repository.CompanyRepository;
 import com.junbin.mall.repository.UserRepository;
@@ -35,12 +33,21 @@ public class AdminService {
     }
 
     public AdminLoginDto login(AdminLoginDto adminLoginDto) {
-        Admin admin = adminRepository.findUserByName(adminLoginDto.getName())
+        Admin admin = adminRepository.findAdminByName(adminLoginDto.getName())
                 .orElseThrow(() -> new UserIsNotExistException(ExceptionMessage.ADMIN_NOT_EXIST));
         if(!admin.getPassword().equals(admin.getPassword())) {
             throw new UserPasswordIsNotCorrectException(ExceptionMessage.ADMIN_PASSWORD_NOT_CORRECT);
         }
         return ConvertTool.convertObject(admin,AdminLoginDto.class);
+    }
+
+    public AdminDto register(AdminDto adminDto) {
+        Optional<Admin> admin = adminRepository.findAdminByName(adminDto.getName());
+        if(admin.isPresent()) {
+            throw new UserIsExistException(ExceptionMessage.ADMIN_IS_EXIST);
+        }
+        Admin newAdmin = adminRepository.save(ConvertTool.convertObject(adminDto, Admin.class));
+        return ConvertTool.convertObject(newAdmin, AdminDto.class);
     }
 
     public List<AdminUserDto> getUsers(){

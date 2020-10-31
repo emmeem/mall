@@ -1,6 +1,7 @@
 package com.junbin.mall.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.junbin.mall.dto.AdminDto;
 import com.junbin.mall.dto.AdminLoginDto;
 import com.junbin.mall.dto.AdminUserDto;
 import com.junbin.mall.dto.CompanyDto;
@@ -40,6 +41,7 @@ public class AdminControllerTest {
     private AdminLoginDto adminLoginDto;
     private AdminUserDto adminUserDto;
     private CompanyDto companyDto;
+    private AdminDto adminDto;
 
     @BeforeEach
     public void beforeEach() {
@@ -57,6 +59,12 @@ public class AdminControllerTest {
 
         companyDto = companyDto.builder()
                 .name("A")
+                .build();
+
+        adminDto = adminDto.builder()
+                .name("root")
+                .password("123456")
+                .companyName("A")
                 .build();
     }
     @Nested
@@ -97,6 +105,22 @@ public class AdminControllerTest {
                     .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isBadRequest())
                     .andExpect(jsonPath("$.message", is("管理员密码不能为空")));
+        }
+    }
+
+    @Nested
+    class register {
+        @Test
+        public void should_return_created_when_admin_info_is_correct() throws Exception {
+            when(adminService.register(adminDto)).thenReturn(adminDto);
+
+            String jsonData = objectMapper.writeValueAsString(adminDto);
+            mockMvc.perform(post("/admin/register")
+                    .content(jsonData)
+                    .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isCreated())
+                    .andExpect(jsonPath("$.companyName", is("A")));
+            verify(adminService).register(adminDto);
         }
     }
 

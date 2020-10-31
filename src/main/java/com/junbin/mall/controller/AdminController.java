@@ -1,5 +1,6 @@
 package com.junbin.mall.controller;
 
+import com.junbin.mall.dto.AdminDto;
 import com.junbin.mall.dto.AdminLoginDto;
 import com.junbin.mall.dto.AdminUserDto;
 import com.junbin.mall.dto.CompanyDto;
@@ -28,6 +29,13 @@ public class AdminController {
     @ApiOperation(value = "管理员登陆",httpMethod = "POST")
     public AdminLoginDto login(@Valid @RequestBody AdminLoginDto adminLoginDto) {
         return adminService.login(adminLoginDto);
+    }
+
+    @PostMapping("/register")
+    @ResponseStatus(HttpStatus.CREATED)
+    @ApiOperation(value = "管理员注册",httpMethod = "POST")
+    public AdminDto register(@Valid @RequestBody AdminDto adminDto) {
+        return adminService.register(adminDto);
     }
 
     @GetMapping("/users")
