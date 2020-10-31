@@ -25,7 +25,7 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResult);
     }
 
-    @ExceptionHandler(UserPasswordIsNotCorrectException.class)
+    @ExceptionHandler({UserPasswordIsNotCorrectException.class, CompanyIsExistException.class})
     public ResponseEntity<ErrorResult> correctHandler(Exception ex) {
         ErrorResult errorResult = new ErrorResult(ex.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResult);

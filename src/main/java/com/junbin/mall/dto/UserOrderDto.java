@@ -37,5 +37,7 @@ public class UserOrderDto {
 
     private Double finalPrice;
 
+    private String companyName;
+
     private List<OrderItem> orderItems;
 }

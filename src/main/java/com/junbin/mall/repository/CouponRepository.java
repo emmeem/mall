@@ -11,7 +11,7 @@ import java.util.Optional;
 public interface CouponRepository extends CrudRepository<Coupon, Long> {
     Optional<Coupon> findCouponByName(String name);
 
-    Coupon findCouponByCompanyNameAndType(String CompanyName, String Type);
+    Optional<Coupon> findCouponByCompanyNameAndType(String CompanyName, String Type);
 
     List<Coupon> findCouponByCompanyName(String CompanyName);
 }

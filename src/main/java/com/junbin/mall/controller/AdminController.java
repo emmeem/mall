@@ -2,6 +2,7 @@ package com.junbin.mall.controller;
 
 import com.junbin.mall.dto.AdminLoginDto;
 import com.junbin.mall.dto.AdminUserDto;
+import com.junbin.mall.dto.CompanyDto;
 import com.junbin.mall.service.AdminService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -38,9 +39,17 @@ public class AdminController {
 
     @PostMapping("/user/{id}/{tag}")
     @ResponseStatus(HttpStatus.OK)
-    @ApiOperation(value = "给用户设置标签", httpMethod = "POST")
+    @ApiOperation(value = "设置用户标签", httpMethod = "POST")
     public AdminUserDto setUserTag(@PathVariable Long id,
                                    @PathVariable String tag){
         return adminService.setUserTag(id,tag);
     }
+
+    @PostMapping("/company")
+    @ResponseStatus(HttpStatus.CREATED)
+    @ApiOperation(value = "注册公司信息", httpMethod = "POST")
+    public CompanyDto regCompany(@RequestBody CompanyDto companyDto) {
+        return adminService.regCompany(companyDto);
+    }
+
 }

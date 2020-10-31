@@ -3,7 +3,7 @@ package com.junbin.mall.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.junbin.mall.dto.AdminLoginDto;
 import com.junbin.mall.dto.AdminUserDto;
-import com.junbin.mall.dto.UserDto;
+import com.junbin.mall.dto.CompanyDto;
 import com.junbin.mall.service.AdminService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -39,6 +39,7 @@ public class AdminControllerTest {
 
     private AdminLoginDto adminLoginDto;
     private AdminUserDto adminUserDto;
+    private CompanyDto companyDto;
 
     @BeforeEach
     public void beforeEach() {
@@ -52,6 +53,10 @@ public class AdminControllerTest {
                 .password("123567")
                 .phone("18117828787")
                 .address("1street")
+                .build();
+
+        companyDto = companyDto.builder()
+                .name("A")
                 .build();
     }
     @Nested
@@ -120,7 +125,24 @@ public class AdminControllerTest {
             mockMvc.perform(post("/admin/user/"+id+"/"+tag))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.tag", is("Electronics enthusiast")));
+        }
+    }
 
+    @Nested
+    class companyManage {
+        @Test
+        public void should_return_success_when_company_info_is_correct() throws Exception {
+            when(adminService.regCompany(companyDto)).thenReturn(companyDto);
+
+            String jsonData = objectMapper.writeValueAsString(companyDto);
+
+            mockMvc.perform(post("/admin/company")
+                    .content(jsonData)
+                    .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isCreated())
+                    .andExpect(jsonPath("$.name", is("A")));
+
+            verify(adminService).regCompany(companyDto);
         }
     }
 }

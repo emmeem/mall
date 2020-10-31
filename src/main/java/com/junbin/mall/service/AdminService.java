@@ -1,13 +1,17 @@
 package com.junbin.mall.service;
 
 import com.junbin.mall.domain.Admin;
+import com.junbin.mall.domain.Company;
 import com.junbin.mall.domain.User;
 import com.junbin.mall.dto.AdminLoginDto;
 import com.junbin.mall.dto.AdminUserDto;
+import com.junbin.mall.dto.CompanyDto;
+import com.junbin.mall.exception.CompanyIsExistException;
 import com.junbin.mall.exception.ExceptionMessage;
 import com.junbin.mall.exception.UserIsNotExistException;
 import com.junbin.mall.exception.UserPasswordIsNotCorrectException;
 import com.junbin.mall.repository.AdminRepository;
+import com.junbin.mall.repository.CompanyRepository;
 import com.junbin.mall.repository.UserRepository;
 import com.junbin.mall.utils.ConvertTool;
 import org.springframework.stereotype.Service;
@@ -21,9 +25,13 @@ public class AdminService {
 
     private final UserRepository userRepository;
 
-    public AdminService(AdminRepository adminRepository, UserRepository userRepository) {
+    private final CompanyRepository companyRepository;
+
+    public AdminService(AdminRepository adminRepository, UserRepository userRepository,
+    CompanyRepository companyRepository) {
         this.adminRepository = adminRepository;
         this.userRepository = userRepository;
+        this.companyRepository = companyRepository;
     }
 
     public AdminLoginDto login(AdminLoginDto adminLoginDto) {
@@ -49,5 +57,14 @@ public class AdminService {
         user.get().setTag(tag);
         User userAfterSetTag = userRepository.save(user.get());
         return ConvertTool.convertObject(userAfterSetTag, AdminUserDto.class);
+    }
+
+    public CompanyDto regCompany(CompanyDto companyDto) {
+        Optional<Company> company = companyRepository.findByName(companyDto.getName());
+        if(company.isPresent()) {
+            throw new CompanyIsExistException(ExceptionMessage.COMPANY_NAME_IS_NOT_CORRECT);
+        }
+        Company newCompany = companyRepository.save(ConvertTool.convertObject(companyDto,Company.class));
+        return ConvertTool.convertObject(newCompany, CompanyDto.class);
     }
 }

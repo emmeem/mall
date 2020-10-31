@@ -5,10 +5,7 @@ import com.junbin.mall.domain.User;
 import com.junbin.mall.domain.UserCoupon;
 import com.junbin.mall.dto.UserDto;
 import com.junbin.mall.dto.UserLoginDto;
-import com.junbin.mall.exception.ExceptionMessage;
-import com.junbin.mall.exception.UserIsExistException;
-import com.junbin.mall.exception.UserIsNotExistException;
-import com.junbin.mall.exception.UserPasswordIsNotCorrectException;
+import com.junbin.mall.exception.*;
 import com.junbin.mall.repository.CouponRepository;
 import com.junbin.mall.repository.UserCouponRepository;
 import com.junbin.mall.repository.UserRepository;
@@ -17,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -47,9 +45,10 @@ public class UserService {
     }
 
     private User setCoupon(User user, String companyName, String couponType) {
-        Coupon coupon = couponRepository.findCouponByCompanyNameAndType(companyName, couponType);
+        Optional<Coupon> coupon = couponRepository.findCouponByCompanyNameAndType(companyName, couponType);
+
         userCoupon = userCoupon.builder()
-                     .coupon(coupon)
+                     .coupon(coupon.get())
                      .user(user)
                      .build();
 

@@ -31,5 +31,7 @@ public class ExceptionMessage {
 
     public static final String ORDER_IS_NOT_EXIST = "订单不存在";
 
+    public static final String COMPANY_NAME_IS_EMPTY = "公司名称不能为空";
+    public static final String COMPANY_NAME_IS_NOT_CORRECT = "该公司名称已存在";
 
 }
