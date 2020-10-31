@@ -27,6 +27,8 @@ public class UserProductDto {
 
     private String description;
 
+    private Long stock;
+
     private List<Picture> pictures;
 
 }

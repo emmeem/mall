@@ -51,6 +51,7 @@ public class UserProductControllerTest {
                 .name("liao")
                 .companyName("A")
                 .price(14.00)
+                .stock(15L)
                 .description("a good product")
                 .pictures(pictures)
                 .build();

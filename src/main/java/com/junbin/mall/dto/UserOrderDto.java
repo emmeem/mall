@@ -3,7 +3,6 @@ package com.junbin.mall.dto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.junbin.mall.domain.OrderItem;
-import com.junbin.mall.domain.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
