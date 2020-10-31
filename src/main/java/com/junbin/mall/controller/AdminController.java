@@ -56,7 +56,7 @@ public class AdminController {
     @PostMapping("/company")
     @ResponseStatus(HttpStatus.CREATED)
     @ApiOperation(value = "注册公司信息", httpMethod = "POST")
-    public CompanyDto regCompany(@RequestBody CompanyDto companyDto) {
+    public CompanyDto regCompany(@Valid @RequestBody CompanyDto companyDto) {
         return adminService.regCompany(companyDto);
     }
 

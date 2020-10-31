@@ -17,15 +17,16 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResult);
     }
 
-    @ExceptionHandler({UserIsExistException.class,UserIsNotExistException.class,
-            ProductIsNotExistException.class, CouponIsExistException.class,
+    @ExceptionHandler({UserIsNotExistException.class, ProductIsNotExistException.class,
             CouponIsNotExistException.class, OrderIsNotExist.class})
     public ResponseEntity<ErrorResult> existHandler(Exception ex) {
         ErrorResult errorResult = new ErrorResult(ex.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResult);
     }
 
-    @ExceptionHandler({UserPasswordIsNotCorrectException.class, CompanyIsExistException.class})
+    @ExceptionHandler({UserIsExistException.class,UserPasswordIsNotCorrectException.class,
+            CompanyIsExistException.class, CouponIsExistException.class,
+            MissionIsExistException.class})
     public ResponseEntity<ErrorResult> correctHandler(Exception ex) {
         ErrorResult errorResult = new ErrorResult(ex.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResult);

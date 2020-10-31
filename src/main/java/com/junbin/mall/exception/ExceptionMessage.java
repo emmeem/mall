@@ -34,4 +34,6 @@ public class ExceptionMessage {
     public static final String COMPANY_NAME_IS_EMPTY = "公司名称不能为空";
     public static final String COMPANY_NAME_IS_NOT_CORRECT = "该公司名称已存在";
 
+    public static final String MISSION_IS_EXIST = "该任务已存在";
+
 }
