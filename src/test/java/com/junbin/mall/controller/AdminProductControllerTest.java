@@ -79,15 +79,16 @@ public class AdminProductControllerTest {
         public void should_return_product_list() throws Exception {
             List<AdminProductDto> adminProductDtos = new ArrayList<>();
             adminProductDtos.add(adminProductDto);
-            when(adminProductService.getProducts(adminProductDto.getCompanyName()))
+            String companyName = adminProductDto.getCompanyName();
+            when(adminProductService.getProducts(companyName))
                     .thenReturn(adminProductDtos);
 
-            mockMvc.perform(get("/admin/product")
+            mockMvc.perform(get("/admin/product/"+companyName)
                     .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(jsonPath("$", hasSize(1)))
                     .andExpect(jsonPath("$[0].description", is("a good product")))
                     .andExpect(status().isOk());
-            verify(adminProductService).getProducts(adminProductDto.getCompanyName());
+            verify(adminProductService).getProducts(companyName);
         }
     }
 

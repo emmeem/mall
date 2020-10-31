@@ -13,7 +13,7 @@ import java.util.List;
 @RestController
 @CrossOrigin
 @RequestMapping("/admin/coupon")
-@Api(tags = "优惠券管理")
+@Api(tags = "管理员优惠券管理接口")
 public class AdminCouponController {
     private final AdminCouponService adminCouponService;
 

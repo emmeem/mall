@@ -12,7 +12,7 @@ import java.util.List;
 @RestController
 @CrossOrigin
 @RequestMapping("/admin/product")
-@Api(tags = "商品管理")
+@Api(tags = "管理员商品管理接口")
 public class AdminProductController {
     private final AdminProductService adminProductService;
 

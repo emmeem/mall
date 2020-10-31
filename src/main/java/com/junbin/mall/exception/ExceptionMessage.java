@@ -29,6 +29,7 @@ public class ExceptionMessage {
     public static final String COUPON_START_TIME_NOT_EMPTY ="优惠券启用时间不能为空";
     public static final String COUPON_END_TIME_NOT_EMPTY ="优惠券失效时间不能为空";
 
+    public static final String ORDER_IS_NOT_EXIST = "订单不存在";
 
 
 }
