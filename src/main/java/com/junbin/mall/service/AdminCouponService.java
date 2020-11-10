@@ -11,6 +11,7 @@ import com.junbin.mall.repository.UserCouponRepository;
 import com.junbin.mall.utils.ConvertTool;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,16 +27,18 @@ public class AdminCouponService {
         this.userCouponRepository = userCouponRepository;
     }
 
+    @Transactional
     public AdminCouponDto createCoupon(AdminCouponDto adminCouponDto) {
         Optional<Coupon> coupon = couponRepository.findCouponByName(adminCouponDto.getName());
         if(coupon.isPresent()) {
-            if(coupon.get().getCompanyName() == adminCouponDto.getName())
+            if(coupon.get().getCompanyName().equals(adminCouponDto.getName()))
             throw new CouponIsExistException(ExceptionMessage.COUPON_IS_EXIST);
         }
         Coupon newCoupon = couponRepository.save(ConvertTool.convertObject(adminCouponDto, Coupon.class));
         return ConvertTool.convertObject(newCoupon, AdminCouponDto.class);
     }
 
+    @Transactional
     public void deleteCoupon(Long id) {
         Optional<Coupon> coupon = couponRepository.findById(id);
         if(!coupon.isPresent()) {
@@ -57,6 +60,7 @@ public class AdminCouponService {
         return ConvertTool.convertList(coupons, AdminCouponDto.class);
     }
 
+    @Transactional
     public void deleteUserCoupon(Long id) {
         Optional<UserCoupon> userCoupon = userCouponRepository.findById(id);
         if(!userCoupon.isPresent()) {

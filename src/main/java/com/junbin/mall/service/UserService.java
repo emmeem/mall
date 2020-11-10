@@ -12,6 +12,7 @@ import com.junbin.mall.repository.UserRepository;
 import com.junbin.mall.utils.ConvertTool;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -28,8 +29,7 @@ public class UserService {
     private UserCoupon userCoupon;
 
     public UserService (UserRepository userRepository, CouponRepository couponRepository,
-                        UserCouponRepository userCouponRepository
-                        ) {
+                        UserCouponRepository userCouponRepository) {
         this.userRepository = userRepository;
         this.couponRepository = couponRepository;
         this.userCouponRepository = userCouponRepository;
@@ -43,6 +43,7 @@ public class UserService {
        }
        return ConvertTool.convertObject(user,UserLoginDto.class);
     }
+
 
     private User setCoupon(User user, String companyName, String couponType) {
         Optional<Coupon> coupon = couponRepository.findCouponByCompanyNameAndType(companyName, couponType);
@@ -58,6 +59,7 @@ public class UserService {
         return user;
     }
 
+    @Transactional
     public UserDto register(UserDto userDto) {
       if(userRepository.findUserByName(userDto.getName()).isPresent()) {
           throw new UserIsExistException(ExceptionMessage.USER_IS_EXIST);

@@ -9,6 +9,7 @@ import com.junbin.mall.repository.ProductRepository;
 import com.junbin.mall.utils.ConvertTool;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,6 +26,7 @@ public class AdminProductService {
         return ConvertTool.convertList(products, AdminProductDto.class);
     }
 
+    @Transactional
     public AdminProductDto createProduct(AdminProductDto adminProductDto) {
         Product product = ConvertTool.convertObject(adminProductDto, Product.class);
         List<Picture> pictureList = adminProductDto.getPictures();
@@ -35,6 +37,7 @@ public class AdminProductService {
         return ConvertTool.convertObject(newProduct, AdminProductDto.class);
     }
 
+    @Transactional
     public AdminProductDto update(Long id, AdminProductDto adminProductDto) {
         productRepository.findById(id)
                 .orElseThrow(() -> new ProductIsNotExistException(ExceptionMessage.PRODUCT_NOT_EXIST));

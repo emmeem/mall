@@ -14,6 +14,7 @@ import com.junbin.mall.repository.UserRepository;
 import com.junbin.mall.utils.ConvertTool;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,6 +42,7 @@ public class AdminService {
         return ConvertTool.convertObject(admin,AdminLoginDto.class);
     }
 
+    @Transactional
     public AdminDto register(AdminDto adminDto) {
         Optional<Admin> admin = adminRepository.findAdminByName(adminDto.getName());
         if(admin.isPresent()) {
@@ -56,6 +58,7 @@ public class AdminService {
         return ConvertTool.convertList(users, AdminUserDto.class);
     }
 
+    @Transactional
     public AdminUserDto setUserTag(Long id, String tag) {
         Optional<User> user = userRepository.findById(id);
         if(!user.isPresent()) {
@@ -66,6 +69,7 @@ public class AdminService {
         return ConvertTool.convertObject(userAfterSetTag, AdminUserDto.class);
     }
 
+    @Transactional
     public CompanyDto regCompany(CompanyDto companyDto) {
         Optional<Company> company = companyRepository.findByName(companyDto.getName());
         if(company.isPresent()) {

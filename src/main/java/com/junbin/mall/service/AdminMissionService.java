@@ -8,6 +8,7 @@ import com.junbin.mall.repository.MissionRepository;
 import com.junbin.mall.utils.ConvertTool;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Service
@@ -18,6 +19,7 @@ public class AdminMissionService {
         this.missionRepository = missionRepository;
     }
 
+    @Transactional
     public AdminMissionDto setMission(AdminMissionDto adminMissionDto) {
         Optional<Mission> mission = missionRepository.findById(adminMissionDto.getId());
         if(mission.isPresent()) {
