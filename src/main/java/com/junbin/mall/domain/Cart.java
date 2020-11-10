@@ -5,11 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import java.util.Date;
+import javax.persistence.*;
 
 @Data
 @Builder
@@ -23,13 +19,9 @@ public class Cart {
 
     private Long userId;
 
-    private Long productId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "productId")
+    private Product product;
 
-    private String productName;
-
-    private Integer productCount;
-
-    private Date createTime;
-
-    private Date updateTime;
+    private Integer count;
 }

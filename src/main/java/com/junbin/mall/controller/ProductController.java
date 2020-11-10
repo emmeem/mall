@@ -34,6 +34,4 @@ public class ProductController {
     public List<UserProductDto> getProductsByCompanyName(@PathVariable String companyName) {
         return userProductService.getProductsByCompanyName(companyName);
     }
-
-
 }
