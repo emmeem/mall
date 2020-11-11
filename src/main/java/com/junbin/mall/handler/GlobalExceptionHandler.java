@@ -18,7 +18,8 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler({UserIsNotExistException.class, ProductIsNotExistException.class,
-            CouponIsNotExistException.class, OrderIsNotExist.class})
+            CouponIsNotExistException.class, OrderIsNotExist.class,
+    CartInfoIsNotExistException.class})
     public ResponseEntity<ErrorResult> existHandler(Exception ex) {
         ErrorResult errorResult = new ErrorResult(ex.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResult);

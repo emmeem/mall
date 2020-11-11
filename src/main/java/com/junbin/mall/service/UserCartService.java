@@ -4,6 +4,7 @@ import com.junbin.mall.domain.Cart;
 import com.junbin.mall.domain.Product;
 import com.junbin.mall.dto.CartDto;
 import com.junbin.mall.dto.CartToFrontDto;
+import com.junbin.mall.exception.CartInfoIsNotExistException;
 import com.junbin.mall.exception.ExceptionMessage;
 import com.junbin.mall.exception.ProductIsNotExistException;
 import com.junbin.mall.repository.CartRepository;
@@ -44,5 +45,12 @@ public class UserCartService {
         }
         Cart newCart = cartRepository.save(cart);
         return ConvertTool.convertObject(newCart, CartToFrontDto.class);
+    }
+
+    public CartToFrontDto getCartInfo(Long userId) {
+        Cart cart = cartRepository.findAllByUserId(userId)
+                .orElseThrow(() -> new CartInfoIsNotExistException(ExceptionMessage.CART_IS_NOT_EXIST));
+
+        return ConvertTool.convertObject(cart, CartToFrontDto.class);
     }
 }

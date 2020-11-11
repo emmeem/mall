@@ -36,4 +36,6 @@ public class ExceptionMessage {
 
     public static final String MISSION_IS_EXIST = "该任务已存在";
 
+    public static final String CART_IS_NOT_EXIST = "该用户暂无购物车信息";
+
 }

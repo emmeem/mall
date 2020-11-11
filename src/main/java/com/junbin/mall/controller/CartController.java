@@ -29,4 +29,10 @@ public class CartController {
         return userCartService.addProductsToCart(cartDto);
     }
 
+    @GetMapping("/{userId}")
+    @ResponseStatus
+    @ApiOperation(value = "获取购物车信息")
+    public CartToFrontDto getCartInfo(@PathVariable Long userId) {
+        return userCartService.getCartInfo(userId);
+    }
 }
