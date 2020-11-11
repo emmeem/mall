@@ -1,5 +1,6 @@
 package com.junbin.mall.repository;
 
+import com.junbin.mall.domain.User;
 import com.junbin.mall.domain.UserCoupon;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -21,4 +22,6 @@ public interface UserCouponRepository extends CrudRepository<UserCoupon, Long> {
 
     @Query(value="select * from user_coupon where coupon_id = ?1", nativeQuery = true)
     List<UserCoupon> findAllByCouponId(Long id);
+
+    List<UserCoupon> findAllByUser(User user);
 }
