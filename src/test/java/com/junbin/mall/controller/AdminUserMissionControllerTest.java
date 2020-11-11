@@ -22,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @AutoConfigureJsonTesters
 @WebMvcTest(AdminMissionController.class)
-public class AdminMissionControllerTest {
+public class AdminUserMissionControllerTest {
     @MockBean
     private AdminMissionService adminMissionService;
     @Autowired
