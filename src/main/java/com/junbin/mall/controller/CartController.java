@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @CrossOrigin
@@ -32,7 +33,8 @@ public class CartController {
     @GetMapping("/{userId}")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "获取购物车信息")
-    public CartToFrontDto getCartInfo(@PathVariable Long userId) {
+    public List<CartToFrontDto> getCartInfo(@PathVariable Long userId) {
+
         return userCartService.getCartInfo(userId);
     }
 }

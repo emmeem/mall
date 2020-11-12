@@ -13,6 +13,7 @@ import com.junbin.mall.utils.ConvertTool;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -47,10 +48,11 @@ public class UserCartService {
         return ConvertTool.convertObject(newCart, CartToFrontDto.class);
     }
 
-    public CartToFrontDto getCartInfo(Long userId) {
-        Cart cart = cartRepository.findAllByUserId(userId)
-                .orElseThrow(() -> new CartInfoIsNotExistException(ExceptionMessage.CART_IS_NOT_EXIST));
-
-        return ConvertTool.convertObject(cart, CartToFrontDto.class);
+    public List<CartToFrontDto> getCartInfo(Long userId) {
+        List<Cart> cart = cartRepository.findAllByUserId(userId);
+        if(cart.isEmpty()) {
+            throw new CartInfoIsNotExistException(ExceptionMessage.CART_IS_NOT_EXIST);
+        }
+        return ConvertTool.convertList(cart, CartToFrontDto.class);
     }
 }
