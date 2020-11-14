@@ -1,6 +1,7 @@
 package com.junbin.mall.controller;
 
 import com.junbin.mall.dto.MissionDto;
+import com.junbin.mall.dto.UserCouponDto;
 import com.junbin.mall.service.UserMissionService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

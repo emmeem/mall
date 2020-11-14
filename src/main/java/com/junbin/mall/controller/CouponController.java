@@ -1,6 +1,7 @@
 package com.junbin.mall.controller;
 
 import com.junbin.mall.dto.CouponDto;
+import com.junbin.mall.dto.UserCouponDto;
 import com.junbin.mall.service.UserCouponService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -26,5 +27,12 @@ public class CouponController {
     @ApiOperation(value = "获取优惠劵信息")
     public List<CouponDto> getUserCoupon(@PathVariable Long userId){
        return userCouponService.getUserCoupon(userId);
+    }
+
+    @PostMapping("/userCoupon")
+    @ResponseStatus(HttpStatus.CREATED)
+    @ApiOperation(value="设置用户优惠劵信息")
+    public UserCouponDto setUserCoupon(@RequestBody UserCouponDto userCouponDto) {
+        return userCouponService.setUserCoupon(userCouponDto);
     }
 }
