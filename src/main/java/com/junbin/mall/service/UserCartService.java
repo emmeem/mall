@@ -34,7 +34,7 @@ public class UserCartService {
         if(!product.isPresent()) {
             throw new ProductIsNotExistException(ExceptionMessage.PRODUCT_NOT_EXIST);
         }
-        Cart cart = cartRepository.findByProduct(product.get());
+        Cart cart = cartRepository.findByProductAndUserId(product.get(),cartDto.getUserId());
         if(cart != null){
             cart.setCount(cart.getCount()+cartDto.getCount());
         }else {
