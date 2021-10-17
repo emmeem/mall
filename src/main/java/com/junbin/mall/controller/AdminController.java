@@ -24,7 +24,6 @@ public class AdminController {
         this.adminService = adminService;
     }
 
-
     @PostMapping("/login")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "管理员登陆",httpMethod = "POST")
