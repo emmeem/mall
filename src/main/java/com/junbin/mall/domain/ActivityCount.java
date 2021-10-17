@@ -15,20 +15,18 @@ import javax.persistence.Id;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Payment {
+public class ActivityCount {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    private String companyName;
 
-    private Long orderId;
+    private Long missionId;
 
-    private Double totalPrice;
+    private Long visitCompanyPageNums;
 
-    private Long couponId;
+    private Long visitActivityPageNums;
 
-    private Long actualPrice;
-
-    private Long finalPrice;
+    private Long getCouponNums;
 }

@@ -1,5 +1,6 @@
 package com.junbin.mall.controller;
 
+import com.junbin.mall.dto.ActivityEffectDto;
 import com.junbin.mall.dto.AdminMissionDto;
 import com.junbin.mall.service.AdminMissionService;
 import io.swagger.annotations.Api;
@@ -25,5 +26,14 @@ public class AdminMissionController {
     public AdminMissionDto setMission(@RequestBody AdminMissionDto adminMissionDto) {
         return adminMissionService.setMission(adminMissionDto);
     }
+
+    @GetMapping("/effect/{companyName}")
+    @ResponseStatus(HttpStatus.OK)
+    @ApiOperation(value = "获取活动效果", httpMethod = "GET")
+    public ActivityEffectDto getActivityEffect(@PathVariable String companyName) {
+        return adminMissionService.getActivityEffect(companyName);
+    }
+
+
 
 }
