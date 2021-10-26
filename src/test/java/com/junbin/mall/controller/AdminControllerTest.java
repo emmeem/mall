@@ -132,7 +132,7 @@ public class AdminControllerTest {
             adminUserDtos.add(adminUserDto);
             when(adminService.getUsers()).thenReturn(adminUserDtos);
 
-            mockMvc.perform(get("/admin/userList"))
+            mockMvc.perform(get("/admin/users"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$", hasSize(1)))
                     .andExpect(jsonPath("$[0].phone", is("18117828787")));
