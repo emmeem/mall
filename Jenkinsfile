@@ -21,4 +21,12 @@ pipeline {
         }
      }
   }
+  post {
+      success {
+          mail to: '18117837259@163.com',
+               subject: "Succeed Pipeline: ${currentBuild.fullDisplayName}",
+               body: "Succeed with ${env.BUILD_URL}"
+      }
+  }
+
 }
