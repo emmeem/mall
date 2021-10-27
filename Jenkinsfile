@@ -23,7 +23,7 @@ pipeline {
   }
   post {
       success {
-          mail to: '18117837259@163.com',
+          mail to: '1124782639@qq.com',
                subject: "Succeed Pipeline: ${currentBuild.fullDisplayName}",
                body: "Succeed with ${env.BUILD_URL}"
       }
