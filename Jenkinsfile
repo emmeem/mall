@@ -5,7 +5,7 @@ pipeline {
       stage('代码审查') {
           steps {
               script {
-                  cannerHome = tool 'SONAR_SCANNER_HOME'
+                  scannerHome = tool 'SONAR_SCANNER_HOME'
               }
               withSonarQubeEnv('sonar-8.4.0') {
                   sh "${scannerHome}/bin/sonar-scanner"
