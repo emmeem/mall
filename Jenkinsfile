@@ -22,8 +22,8 @@ pipeline {
       stage('Sanity check') {
           steps {
               input "Does the test environment look ok?"
-              }
           }
+      }
       stage('Test') {
           steps {
               echo 'Testing...'
