@@ -16,7 +16,7 @@ pipeline {
           steps {
               echo 'Building...'
               echo "Running ${env.BUILD_ID} ${env.BUILD_DISPLAY_NAME} on ${env.NODE_NAME} and JOB ${env.JOB_NAME}"
-              sh './gradlew build -x test'
+              sh './gradlew clean build -x test'
           }
       }
       stage('Sanity check') {
