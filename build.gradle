@@ -43,7 +43,7 @@ test {
 jacocoTestReport {
 	reports {
 		xml.enabled =true
-		xml.destination=file("${buildDir}/jacocoReportXml/")
+		xml.destination=file("${buildDir}/jacocoReport.xml")
 		csv.enabled = false
 		html.enabled = true
 		html.destination = file("${buildDir}/jacocoReport")

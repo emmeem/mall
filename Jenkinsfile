@@ -2,6 +2,13 @@ pipeline {
   agent any
 
   stages {
+      stage('Gradle Build') {
+          steps {
+              echo 'Building...'
+              echo "Running ${env.BUILD_ID} ${env.BUILD_DISPLAY_NAME} on ${env.NODE_NAME} and JOB ${env.JOB_NAME}"
+              sh './gradlew clean build -x test'
+          }
+      }
       stage('代码审查') {
           steps {
               script {
@@ -10,13 +17,6 @@ pipeline {
               withSonarQubeEnv('sonar-8.4.0') {
                   sh "${scannerHome}/bin/sonar-scanner"
               }
-          }
-      }
-      stage('Gradle Build') {
-          steps {
-              echo 'Building...'
-              echo "Running ${env.BUILD_ID} ${env.BUILD_DISPLAY_NAME} on ${env.NODE_NAME} and JOB ${env.JOB_NAME}"
-              sh './gradlew clean build -x test'
           }
       }
       stage('Sanity check') {
